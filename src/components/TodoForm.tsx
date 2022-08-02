@@ -1,5 +1,6 @@
 import { ITodos, IUser } from 'types/interfaces';
-import { useForm } from 'react-hook-form';
+import { useForm, UseFormReset } from 'react-hook-form';
+import styled from 'styled-components';
 
 interface FormProps {
   children?: React.ReactNode;
@@ -13,36 +14,51 @@ const TodoForm = (props: FormProps) => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<ITodos>({ mode: 'onChange' });
 
+  const handleOnSubmit = (data: ITodos) => {
+    onSubmit(data);
+    reset();
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <StyledForm onSubmit={handleSubmit(handleOnSubmit)}>
       <div>
-        <label htmlFor='title'>title</label>
-        <input
-          id='title'
-          type='text'
-          {...register('title', {
-            required: true,
-          })}
-        />
-        {errors.title && errors.title.type === 'required' && <p>제목을 입력해주세요.</p>}
-      </div>
-      <div>
-        <label htmlFor='content'>content</label>
-        <input
-          id='content'
-          type='content'
-          placeholder='필수 입력 항목'
-          {...register('content', {
-            required: true,
-          })}
-        />
-        {errors.content && errors.content.type === 'required' && <p>내용을 입력해주세요.</p>}
+        <div>
+          <input
+            id='title'
+            type='text'
+            {...register('title', {
+              required: true,
+            })}
+            placeholder='제목'
+            size={30}
+          />
+          {errors.title && errors.title.type === 'required' && <p>제목을 입력해주세요.</p>}
+        </div>
+        <div>
+          <input
+            id='content'
+            type='content'
+            placeholder='내용'
+            {...register('content', {
+              required: true,
+            })}
+            size={30}
+          />
+          {errors.content && errors.content.type === 'required' && <p>내용을 입력해주세요.</p>}
+        </div>
       </div>
       {children}
-    </form>
+    </StyledForm>
   );
 };
+
+const StyledForm = styled.form`
+  display: flex;
+  justify-content: center;
+  margin: 5em;
+`;
 
 export default TodoForm;

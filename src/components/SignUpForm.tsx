@@ -1,5 +1,6 @@
 import { IUser } from 'types/interfaces';
 import { useForm } from 'react-hook-form';
+import SubmitButton from './SubmitButton';
 
 interface FormProps {
   children?: React.ReactNode;
@@ -16,7 +17,7 @@ const SignUpForm = (props: FormProps) => {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<IUser>({ mode: 'onChange' });
 
   return (
@@ -70,6 +71,7 @@ const SignUpForm = (props: FormProps) => {
         />
         {errors.password_check && errors.password_check.type === 'validate' && <p>비밀번호가 일치하지 않습니다.</p>}
       </div>
+      <SubmitButton text='가입하기' disabled={!isValid} />
       {children}
     </form>
   );

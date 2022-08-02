@@ -42,6 +42,16 @@ export const createTodo = async (postData: ITodos) => {
   }
 };
 
+export const updateTodo = async (postData: ITodos, id: string) => {
+  try {
+    const res = (await customAxios.put(`/todos/${id}`, postData)) as ITodoResponse;
+    // console.log(res);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getTodo = async () => {
   try {
     const res = (await customAxios.get('/todos')) as ITodosResponse;
@@ -55,6 +65,15 @@ export const getTodo = async () => {
 export const getTodoById = async (id: string) => {
   try {
     const res = (await customAxios.get(`/todos/${id}`)) as ITodoResponse;
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteTodo = async (id: string) => {
+  try {
+    const res = (await customAxios.delete(`/todos/${id}`)) as ITodoResponse;
     return res;
   } catch (error) {
     console.log(error);

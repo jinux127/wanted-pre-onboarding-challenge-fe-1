@@ -2,11 +2,16 @@ import styled from 'styled-components';
 
 interface IButton {
   text: string;
+  disabled?: boolean;
 }
 
 const SubmitButton = (props: IButton) => {
-  const { text } = props;
-  return <StyledButton type='submit'>{text}</StyledButton>;
+  const { text, disabled } = props;
+  return (
+    <StyledButton type='submit' disabled={disabled}>
+      {text}
+    </StyledButton>
+  );
 };
 
 const StyledButton = styled.button`

@@ -22,7 +22,6 @@ const LoginPage = () => {
   return (
     <div>
       <LoginForm onSubmit={login}>
-        <SubmitButton text='로그인' />
         <Button onClick={() => navigate('/auth/signup')} text='회원가입' />
       </LoginForm>
     </div>

@@ -21,7 +21,6 @@ const SignUpPage = () => {
   return (
     <div>
       <SignUpForm onSubmit={signUp}>
-        <SubmitButton text='가입하기' />
         <Button text='취소' onClick={() => navigate('/')} />
       </SignUpForm>
     </div>
