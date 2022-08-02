@@ -1,14 +1,14 @@
 import { customAxios } from 'api';
 import { Button, SignUpForm, SubmitButton } from 'components';
 import { useNavigate } from 'react-router';
-import { IError, IResponse, IUser } from 'types/interfaces';
+import { IError, ILoginResponse, IUser } from 'types/interfaces';
 
 const SignUpPage = () => {
   let navigate = useNavigate();
 
   const signUp = async (postData: IUser) => {
     try {
-      const res = (await customAxios.post('/users/create', postData)) as IResponse;
+      const res = (await customAxios.post('/users/create', postData)) as ILoginResponse;
       if (res.status === 200) {
         navigate('/auth/login');
       }

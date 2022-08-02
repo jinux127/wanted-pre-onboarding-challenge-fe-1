@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { ITodoResponse, ITodos, ITodosResponse } from 'types/interfaces';
 
 export const customAxios = axios.create({
   baseURL: `${process.env.REACT_APP_API_URL}`,
@@ -6,6 +7,12 @@ export const customAxios = axios.create({
 
 customAxios.interceptors.request.use((config) => {
   // config.withCredentials = true;
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers = {
+      Authorization: `Bearer ${token}`,
+    };
+  }
   return config;
 });
 
@@ -24,3 +31,32 @@ customAxios.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+export const createTodo = async (postData: ITodos) => {
+  try {
+    const res = (await customAxios.post('/todos', postData)) as ITodoResponse;
+    // console.log(res);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getTodo = async () => {
+  try {
+    const res = (await customAxios.get('/todos')) as ITodosResponse;
+    console.log(res);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getTodoById = async (id: string) => {
+  try {
+    const res = (await customAxios.get(`/todos/${id}`)) as ITodoResponse;
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
