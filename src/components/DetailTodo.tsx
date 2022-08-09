@@ -15,10 +15,10 @@ const DetailTodo = () => {
         setDetailTodo(() => res?.data.data);
       })();
     }
-  });
+  }, [todoId]);
 
   const handleModify = () => {
-    navigate(`${todoId}/modify`);
+    navigate(`modify`);
   };
 
   return (

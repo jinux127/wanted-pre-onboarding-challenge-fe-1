@@ -1,29 +1,41 @@
-import { updateTodo } from 'api';
+import { getTodoById, updateTodo } from 'api';
+import { time } from 'console';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router';
 import { ITodoData, ITodos } from 'types/interfaces';
 import Button from './Button';
 import SubmitButton from './SubmitButton';
 
-interface IProps {
-  children?: React.ReactNode;
-  detailTodo?: ITodoData;
-}
-
-const DetailTodoMidfy = (props: IProps) => {
-  const { detailTodo } = props;
+const DetailTodoMidfy = () => {
+  const [detailTodo, setDetailTodo] = useState<ITodoData>();
+  const { todoId } = useParams();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm<ITodos>({ mode: 'onChange' });
+
+  useEffect(() => {
+    if (todoId) {
+      (async () => {
+        const res = await getTodoById(todoId);
+        setDetailTodo(() => res?.data.data);
+        setValue('title', res?.data.data.title || '');
+        setValue('content', res?.data.data.content || '');
+      })();
+    }
+  }, []);
 
   const onModify = (data: ITodos) => {
     if (!detailTodo) return;
 
     (async () => {
       const res = await updateTodo(data, detailTodo?.id);
-      // setDetailTodo(res?.data.data);
+      navigate(`/${todoId}`);
     })();
   };
 
@@ -41,7 +53,6 @@ const DetailTodoMidfy = (props: IProps) => {
               })}
               placeholder='제목'
               size={30}
-              defaultValue={detailTodo?.title}
             />
             {errors.title && errors.title.type === 'required' && <p>제목을 입력해주세요.</p>}
           </div>
@@ -55,7 +66,6 @@ const DetailTodoMidfy = (props: IProps) => {
                 required: true,
               })}
               size={30}
-              defaultValue={detailTodo?.content}
             />
             {errors.content && errors.content.type === 'required' && <p>내용을 입력해주세요.</p>}
           </div>

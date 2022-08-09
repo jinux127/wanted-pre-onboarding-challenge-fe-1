@@ -86,6 +86,14 @@ const MainPage = () => {
         </StyledTodoListDiv>
         <Routes>
           <Route
+            path=':todoId/modify'
+            element={
+              <StyledTodoDetailDiv>
+                <DetailTodoMidfy />
+              </StyledTodoDetailDiv>
+            }
+          />
+          <Route
             path=':todoId'
             element={
               <StyledTodoDetailDiv>
