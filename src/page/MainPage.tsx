@@ -5,18 +5,19 @@ import DetailTodoMidfy from 'components/DetailTodoModify';
 import TodoList from 'components/TodoList';
 import { useEffect, useState } from 'react';
 import { useForm, UseFormReset } from 'react-hook-form';
+import { useParams } from 'react-router';
+import { useLocation } from 'react-router';
 import { Route, Routes, useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { ITodos, ITodoData } from 'types/interfaces';
 
 const MainPage = () => {
   const navigate = useNavigate();
+  const sampleLocation = useLocation();
   const [todoList, setTodoList] = useState<ITodoData[]>();
-  const [detailTodo, setDetailTodo] = useState<ITodoData>();
-  const [isModify, setIsModify] = useState(false);
+
   const handleLogout = () => {
     localStorage.removeItem('token');
-    setDetailTodo(undefined);
     setTodoList(undefined);
     navigate('/');
   };
@@ -29,18 +30,14 @@ const MainPage = () => {
   }, []);
 
   const handleClick = (id: string) => {
-    (async () => {
-      const res = await getTodoById(id);
-      setDetailTodo(() => res?.data.data);
-      navigate(`${id}`);
-    })();
+    navigate(`${id}`);
   };
 
   const handleDeleteTodo = (id: string) => {
     (async () => {
       const res = await deleteTodo(id);
       setTodoList((cur) => cur?.filter((item) => item.id !== id));
-      if (detailTodo?.id === id) setDetailTodo(undefined);
+      if (sampleLocation.pathname === `/${id}`) navigate('/');
     })();
   };
 
@@ -59,6 +56,7 @@ const MainPage = () => {
 
   return (
     <StyledMainDiv>
+      <Button onClick={() => navigate('/')} text='🏠' />
       <div>
         {localStorage.getItem('token') ? (
           <Button onClick={handleLogout} text='로그아웃' />
