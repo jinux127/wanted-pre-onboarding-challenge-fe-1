@@ -1,7 +1,9 @@
-import { IUser } from 'types/interfaces';
+import { ITodosResponse, IUser } from 'types/interfaces';
 import { useForm } from 'react-hook-form';
 import SubmitButton from './SubmitButton';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { getTodo } from 'api';
+import { useNavigate } from 'react-router';
 
 interface FormProps {
   children?: React.ReactNode;
@@ -13,12 +15,21 @@ interface FormProps {
 
 const LoginForm = (props: FormProps) => {
   const { children, onSubmit, isDisabled } = props;
+  const isValidToken = useRef<ITodosResponse>();
+  let navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<IUser>({ mode: 'onChange' });
+
+  useEffect(() => {
+    (async () => {
+      isValidToken.current = await getTodo();
+      if (isValidToken.current?.status === 200) navigate('/');
+    })();
+  }, []);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

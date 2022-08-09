@@ -6,9 +6,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<MainPage />} />
+        <Route path='/*' element={<MainPage />} />
         <Route path='/auth/signup' element={<SignUpPage />} />
         <Route path='/auth/login' element={<LoginPage />} />
+        <Route path='*' element={<div>404 NOT FOUND</div>} />
       </Routes>
     </BrowserRouter>
   );
