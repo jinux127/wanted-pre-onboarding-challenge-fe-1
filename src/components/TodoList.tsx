@@ -29,14 +29,13 @@ const TodoList = (props: IProps) => {
 
   return (
     <StyledTodoListDiv>
-      {todos
-        ? todos.map((item) => (
-            <StyledTodoEleDiv key={item.id}>
-              <StyledTodoDiv onClick={() => handleClick(item.id)}>{item.title}</StyledTodoDiv>;
-              <Button onClick={() => handleDeleteTodo(item.id)} text='삭제' />
-            </StyledTodoEleDiv>
-          ))
-        : ''}
+      {todos &&
+        todos.map((item) => (
+          <StyledTodoEleDiv key={item.id}>
+            <StyledTodoDiv onClick={() => handleClick(item.id)}>{item.title}</StyledTodoDiv>
+            <Button onClick={() => handleDeleteTodo(item.id)} text='삭제' />
+          </StyledTodoEleDiv>
+        ))}
     </StyledTodoListDiv>
   );
 };

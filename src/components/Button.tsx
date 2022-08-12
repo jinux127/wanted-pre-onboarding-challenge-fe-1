@@ -22,6 +22,7 @@ const StyledButton = styled.button`
   border-radius: 10px;
   padding: 15px;
   box-shadow: 1px;
+  margin: 15px;
   cursor: pointer;
   transition: all 0.2s linear;
   :hover {

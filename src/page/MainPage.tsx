@@ -1,19 +1,17 @@
-import { customAxios, createTodo, getTodo, getTodoById, deleteTodo, updateTodo } from 'api';
-import { Button, SubmitButton, TodoForm } from 'components';
+import { customAxios, createTodo, getTodo } from 'api';
+import { Button, Header, SubmitButton, TodoForm } from 'components';
 import DetailTodo from 'components/DetailTodo';
 import DetailTodoMidfy from 'components/DetailTodoModify';
 import TodoList from 'components/TodoList';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useForm, UseFormReset } from 'react-hook-form';
-import { useParams } from 'react-router';
-import { useLocation } from 'react-router';
 import { Route, Routes, useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { ITodos, ITodoData } from 'types/interfaces';
 
 const MainPage = () => {
   const navigate = useNavigate();
-  const sampleLocation = useLocation();
+
   const [todoList, setTodoList] = useState<ITodoData[]>();
 
   const handleLogout = () => {
@@ -44,21 +42,13 @@ const MainPage = () => {
 
   return (
     <StyledMainDiv>
-      <Button onClick={() => navigate('/')} text='🏠' />
-      <div>
-        {localStorage.getItem('token') ? (
-          <Button onClick={handleLogout} text='로그아웃' />
-        ) : (
-          <Button onClick={() => navigate('/auth/login')} text='로그인' />
-        )}
-      </div>
-      {localStorage.getItem('token') ? (
+      <Header setTodoList={setTodoList} />
+      {localStorage.getItem('token') && (
         <TodoForm onSubmit={handleCreateTodo}>
           <SubmitButton text='생성' />
         </TodoForm>
-      ) : (
-        ''
       )}
+
       <StyledTodosDiv>
         <TodoList setTodoList={setTodoList} todos={todoList} />
         <Routes>
@@ -83,9 +73,6 @@ const MainPage = () => {
     </StyledMainDiv>
   );
 };
-const StyledTodoEleDiv = styled.div`
-  display: flex;
-`;
 
 const StyledTodosDiv = styled.div`
   display: flex;
@@ -94,13 +81,6 @@ const StyledTodosDiv = styled.div`
 `;
 const StyledTodoDetailDiv = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-const StyledTodoListDiv = styled.div`
-  display: flex;
-  margin-right: 5em;
   flex-direction: column;
   justify-content: center;
   align-items: center;
