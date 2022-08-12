@@ -48,10 +48,7 @@ const MainPage = () => {
 
 const StyledTodosDiv = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
   border: 1px solid;
-  padding: 1rem 0;
   height: 60vh;
 `;
 const StyledTodoDetailDiv = styled.div`

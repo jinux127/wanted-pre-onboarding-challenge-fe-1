@@ -39,6 +39,10 @@ const DetailTodoMidfy = () => {
     })();
   };
 
+  const handleCancelModify = () => {
+    navigate(`/${todoId}`);
+  };
+
   return (
     <>
       <form onSubmit={handleSubmit(onModify)}>
@@ -71,7 +75,7 @@ const DetailTodoMidfy = () => {
           </div>
         </div>
         <SubmitButton text='완료' />
-        <Button onClick={() => console.log('취소')} text='취소' />
+        <Button onClick={handleCancelModify} text='취소' />
       </form>
     </>
   );

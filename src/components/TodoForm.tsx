@@ -15,10 +15,12 @@ const TodoForm = (props: FormProps) => {
     handleSubmit,
     formState: { errors },
     reset,
+    setFocus,
   } = useForm<ITodos>({ mode: 'onChange' });
 
   const handleOnSubmit = (data: ITodos) => {
     onSubmit(data);
+    setFocus('title');
     reset();
   };
 
