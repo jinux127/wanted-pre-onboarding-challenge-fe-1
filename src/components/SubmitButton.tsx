@@ -16,9 +16,10 @@ const SubmitButton = (props: IButton) => {
 
 const StyledButton = styled.button`
   border: none;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   padding: 15px;
   box-shadow: 1px;
+
   cursor: pointer;
   transition: all 0.2s linear;
   :hover {

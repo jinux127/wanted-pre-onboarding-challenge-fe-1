@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import { IData, IError, ILoginResponse, IUser } from 'types/interfaces';
 import { Button, SubmitButton } from 'components';
 import { customAxios } from 'api';
+import styled from 'styled-components';
 
 const LoginPage = () => {
   let navigate = useNavigate();
@@ -20,12 +21,19 @@ const LoginPage = () => {
     }
   };
   return (
-    <div>
+    <Wrapper>
       <LoginForm onSubmit={login}>
         <Button onClick={() => navigate('/auth/signup')} text='회원가입' />
       </LoginForm>
-    </div>
+    </Wrapper>
   );
 };
+const Wrapper = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default LoginPage;

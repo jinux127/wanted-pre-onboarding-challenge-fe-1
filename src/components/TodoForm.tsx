@@ -20,13 +20,13 @@ const TodoForm = (props: FormProps) => {
 
   const handleOnSubmit = (data: ITodos) => {
     onSubmit(data);
-    setFocus('title');
     reset();
+    setFocus('title');
   };
 
   return localStorage.getItem('token') ? (
     <StyledForm onSubmit={handleSubmit(handleOnSubmit)}>
-      <div>
+      <InputWrapper>
         <div>
           <input
             id='title'
@@ -51,7 +51,7 @@ const TodoForm = (props: FormProps) => {
           />
           {errors.content && errors.content.type === 'required' && <p>내용을 입력해주세요.</p>}
         </div>
-      </div>
+      </InputWrapper>
       {children}
     </StyledForm>
   ) : (
@@ -62,7 +62,20 @@ const TodoForm = (props: FormProps) => {
 const StyledForm = styled.form`
   display: flex;
   justify-content: center;
-  margin: 2em;
+  margin: 1em;
+  width: 50vw;
+  & input {
+    font-size: 1.2rem;
+    /* width: 100%; */
+    border-bottom: 3px solid gray;
+    padding: 0.4rem 0.8rem;
+
+    &:focus {
+      border-bottom: 3px solid ${(props) => props.theme.point3};
+    }
+  }
 `;
+
+const InputWrapper = styled.div``;
 
 export default TodoForm;

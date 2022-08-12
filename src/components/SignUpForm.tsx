@@ -1,6 +1,7 @@
 import { IUser } from 'types/interfaces';
 import { useForm } from 'react-hook-form';
 import SubmitButton from './SubmitButton';
+import styled from 'styled-components';
 
 interface FormProps {
   children?: React.ReactNode;
@@ -21,7 +22,7 @@ const SignUpForm = (props: FormProps) => {
   } = useForm<IUser>({ mode: 'onChange' });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <div>
         <label htmlFor='email'>
           email<span>*</span>
@@ -71,10 +72,64 @@ const SignUpForm = (props: FormProps) => {
         />
         {errors.password_check && errors.password_check.type === 'validate' && <p>비밀번호가 일치하지 않습니다.</p>}
       </div>
-      <SubmitButton text='가입하기' disabled={!isValid} />
-      {children}
-    </form>
+      <div>
+        <SubmitButton text='가입하기' disabled={!isValid} />
+        {children}
+      </div>
+    </StyledForm>
   );
 };
+const StyledForm = styled.form`
+  width: 90%;
+  max-width: 26rem;
+  margin-bottom: 1.5rem;
+
+  & h1 {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 4rem;
+
+    & > strong {
+      color: ${(props) => props.theme.point3};
+    }
+  }
+
+  & label,
+  & input {
+    display: block;
+  }
+
+  & label {
+    margin-bottom: 0.9rem;
+    font-size: 1.5rem;
+
+    & > span {
+      padding-left: 0.5rem;
+      color: red;
+      font-size: 1.1rem;
+    }
+  }
+
+  & input {
+    font-size: 1.2rem;
+    width: 100%;
+    border-bottom: 3px solid gray;
+    padding: 0.4rem 0.8rem;
+
+    &:focus {
+      border-bottom: 3px solid ${(props) => props.theme.point3};
+    }
+  }
+
+  & > div {
+    margin-bottom: 3.2rem;
+  }
+
+  & p {
+    color: red;
+    font-size: 1.2rem;
+    border: 1rem 0;
+  }
+`;
 
 export default SignUpForm;

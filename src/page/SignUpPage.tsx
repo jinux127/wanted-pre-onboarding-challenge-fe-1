@@ -1,6 +1,7 @@
 import { customAxios } from 'api';
 import { Button, SignUpForm, SubmitButton } from 'components';
 import { useNavigate } from 'react-router';
+import styled from 'styled-components';
 import { IError, ILoginResponse, IUser } from 'types/interfaces';
 
 const SignUpPage = () => {
@@ -19,12 +20,20 @@ const SignUpPage = () => {
   };
 
   return (
-    <div>
+    <Wrapper>
       <SignUpForm onSubmit={signUp}>
         <Button text='취소' onClick={() => navigate('/')} />
       </SignUpForm>
-    </div>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default SignUpPage;

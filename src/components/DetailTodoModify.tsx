@@ -3,6 +3,8 @@ import { time } from 'console';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router';
+import styled from 'styled-components';
+import { StyledForm } from 'styles/formStyle';
 import { ITodoData, ITodos } from 'types/interfaces';
 import Button from './Button';
 import SubmitButton from './SubmitButton';
@@ -45,7 +47,7 @@ const DetailTodoMidfy = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onModify)}>
+      <StyledForm onSubmit={handleSubmit(onModify)}>
         <div>
           <div>
             <label htmlFor='title'>제목</label>
@@ -76,7 +78,7 @@ const DetailTodoMidfy = () => {
         </div>
         <SubmitButton text='완료' />
         <Button onClick={handleCancelModify} text='취소' />
-      </form>
+      </StyledForm>
     </>
   );
 };
