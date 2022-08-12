@@ -60,7 +60,7 @@ const TodoForm = (props: FormProps) => {
 const StyledForm = styled.form`
   display: flex;
   justify-content: center;
-  margin: 5em;
+  margin: 2em;
 `;
 
 export default TodoForm;

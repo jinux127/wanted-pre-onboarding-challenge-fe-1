@@ -43,20 +43,28 @@ const TodoList = (props: IProps) => {
 const StyledTodoDiv = styled.div`
   cursor: pointer;
   padding: 2rem;
+  width: 100%;
   :hover {
     background-color: rgba(0, 0, 0, 0.2);
   }
 `;
 const StyledTodoEleDiv = styled.div`
   display: flex;
+  width: 100%;
 `;
 
 const StyledTodoListDiv = styled.div`
   display: flex;
-  margin-right: 5em;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 30vw;
+  overflow-y: scroll;
+  height: 100%;
+  ::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+  }
+  border-right: 1px solid;
 `;
 
 export default TodoList;

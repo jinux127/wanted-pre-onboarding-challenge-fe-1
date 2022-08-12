@@ -1,25 +1,14 @@
-import { customAxios, createTodo, getTodo } from 'api';
-import { Button, Header, SubmitButton, TodoForm } from 'components';
-import DetailTodo from 'components/DetailTodo';
-import DetailTodoMidfy from 'components/DetailTodoModify';
-import TodoList from 'components/TodoList';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { useForm, UseFormReset } from 'react-hook-form';
-import { Route, Routes, useNavigate } from 'react-router';
-import TodoRouter from 'router/TodoRouter';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
+
+import { Header, SubmitButton, TodoForm, TodoList } from 'components';
+import { createTodo, getTodo } from 'api';
 import { ITodos, ITodoData } from 'types/interfaces';
+import TodoRouter from 'router/TodoRouter';
 
 const MainPage = () => {
-  const navigate = useNavigate();
-
   const [todoList, setTodoList] = useState<ITodoData[]>();
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    setTodoList(undefined);
-    navigate('/');
-  };
 
   useEffect(() => {
     (async () => {
@@ -61,12 +50,17 @@ const StyledTodosDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid;
+  padding: 1rem 0;
+  height: 60vh;
 `;
 const StyledTodoDetailDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 50vw;
+  height: 60vh;
 `;
 
 const StyledMainDiv = styled.div`
