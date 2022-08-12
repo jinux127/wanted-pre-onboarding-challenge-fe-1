@@ -6,6 +6,7 @@ import TodoList from 'components/TodoList';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useForm, UseFormReset } from 'react-hook-form';
 import { Route, Routes, useNavigate } from 'react-router';
+import TodoRouter from 'router/TodoRouter';
 import styled from 'styled-components';
 import { ITodos, ITodoData } from 'types/interfaces';
 
@@ -43,30 +44,14 @@ const MainPage = () => {
   return (
     <StyledMainDiv>
       <Header setTodoList={setTodoList} />
-
       <TodoForm onSubmit={handleCreateTodo}>
         <SubmitButton text='생성' />
       </TodoForm>
       <StyledTodosDiv>
         <TodoList setTodoList={setTodoList} todos={todoList} />
-        <Routes>
-          <Route
-            path=':todoId/modify'
-            element={
-              <StyledTodoDetailDiv>
-                <DetailTodoMidfy />
-              </StyledTodoDetailDiv>
-            }
-          />
-          <Route
-            path=':todoId'
-            element={
-              <StyledTodoDetailDiv>
-                <DetailTodo />
-              </StyledTodoDetailDiv>
-            }
-          />
-        </Routes>
+        <StyledTodoDetailDiv>
+          <TodoRouter />
+        </StyledTodoDetailDiv>
       </StyledTodosDiv>
     </StyledMainDiv>
   );
