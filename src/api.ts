@@ -23,7 +23,7 @@ customAxios.interceptors.response.use(
   (response) => response,
   (error) => {
     console.log(error);
-    if (error?.response?.status === 401) {
+    if (window.location.pathname !== '/auth/login') {
       localStorage.removeItem('userId');
       alert('접근 권한이 없습니다. 로그인 화면으로 이동합니다.');
       window.location.href = '/auth/login';

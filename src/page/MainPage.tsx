@@ -29,18 +29,6 @@ const MainPage = () => {
     })();
   }, []);
 
-  const handleClick = (id: string) => {
-    navigate(`${id}`);
-  };
-
-  const handleDeleteTodo = (id: string) => {
-    (async () => {
-      const res = await deleteTodo(id);
-      setTodoList((cur) => cur?.filter((item) => item.id !== id));
-      if (sampleLocation.pathname === `/${id}`) navigate('/');
-    })();
-  };
-
   const handleCreateTodo = async (data: ITodos) => {
     const newContent = await createTodo(data);
     if (newContent) {
@@ -72,16 +60,7 @@ const MainPage = () => {
         ''
       )}
       <StyledTodosDiv>
-        <StyledTodoListDiv>
-          {todoList
-            ? todoList.map((item) => (
-                <StyledTodoEleDiv key={item.id}>
-                  <TodoList data={item} handleClick={handleClick} key={item.id} />
-                  <Button onClick={() => handleDeleteTodo(item.id)} text='삭제' />
-                </StyledTodoEleDiv>
-              ))
-            : ''}
-        </StyledTodoListDiv>
+        <TodoList setTodoList={setTodoList} todos={todoList} />
         <Routes>
           <Route
             path=':todoId/modify'
