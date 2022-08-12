@@ -22,7 +22,7 @@ const TodoForm = (props: FormProps) => {
     reset();
   };
 
-  return (
+  return localStorage.getItem('token') ? (
     <StyledForm onSubmit={handleSubmit(handleOnSubmit)}>
       <div>
         <div>
@@ -52,6 +52,8 @@ const TodoForm = (props: FormProps) => {
       </div>
       {children}
     </StyledForm>
+  ) : (
+    <></>
   );
 };
 

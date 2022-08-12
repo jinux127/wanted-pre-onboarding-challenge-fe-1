@@ -43,12 +43,10 @@ const MainPage = () => {
   return (
     <StyledMainDiv>
       <Header setTodoList={setTodoList} />
-      {localStorage.getItem('token') && (
-        <TodoForm onSubmit={handleCreateTodo}>
-          <SubmitButton text='생성' />
-        </TodoForm>
-      )}
 
+      <TodoForm onSubmit={handleCreateTodo}>
+        <SubmitButton text='생성' />
+      </TodoForm>
       <StyledTodosDiv>
         <TodoList setTodoList={setTodoList} todos={todoList} />
         <Routes>
