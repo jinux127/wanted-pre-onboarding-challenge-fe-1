@@ -1,17 +1,19 @@
-import { getTodoById, updateTodo } from 'api';
-import { time } from 'console';
-import { useEffect, useState } from 'react';
+import { useDetailTodo } from 'hooks/useTodo';
+
+import { useTodoUpdate } from 'hooks/useTodoUpdate';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router';
-import styled from 'styled-components';
+import { useNavigate, useParams } from 'react-router-dom';
+
 import { StyledForm } from 'styles/formStyle';
-import { ITodoData, ITodos } from 'types/interfaces';
+import { ITodos } from 'types/interfaces';
 import Button from './Button';
 import SubmitButton from './SubmitButton';
 
 const DetailTodoMidfy = () => {
-  const [detailTodo, setDetailTodo] = useState<ITodoData>();
   const { todoId } = useParams();
+  const { data } = useDetailTodo(todoId || '');
+  const { mutate } = useTodoUpdate();
   const navigate = useNavigate();
   const {
     register,
@@ -22,23 +24,15 @@ const DetailTodoMidfy = () => {
   } = useForm<ITodos>({ mode: 'onChange' });
 
   useEffect(() => {
-    if (todoId) {
-      (async () => {
-        const res = await getTodoById(todoId);
-        setDetailTodo(() => res?.data.data);
-        setValue('title', res?.data.data.title || '');
-        setValue('content', res?.data.data.content || '');
-      })();
-    }
+    setValue('title', data?.title || '');
+    setValue('content', data?.content || '');
   }, []);
 
   const onModify = (data: ITodos) => {
-    if (!detailTodo) return;
+    if (!todoId) return;
+    mutate({ postData: data, id: todoId });
 
-    (async () => {
-      const res = await updateTodo(data, detailTodo?.id);
-      navigate(`/${todoId}`);
-    })();
+    navigate(-1);
   };
 
   const handleCancelModify = () => {

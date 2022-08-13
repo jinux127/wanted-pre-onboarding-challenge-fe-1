@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { SignUpPage, LoginPage, MainPage } from 'page';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 function App() {
   return (

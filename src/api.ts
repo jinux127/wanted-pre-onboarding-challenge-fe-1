@@ -1,5 +1,6 @@
+import { QueryFunctionContext } from '@tanstack/react-query';
 import axios from 'axios';
-import { ITodoResponse, ITodos, ITodosResponse } from 'types/interfaces';
+import { ITodoData, ITodoResponse, ITodos } from 'types/interfaces';
 
 export const customAxios = axios.create({
   baseURL: `${process.env.REACT_APP_API_URL}`,
@@ -8,7 +9,7 @@ export const customAxios = axios.create({
 customAxios.interceptors.request.use((config) => {
   // config.withCredentials = true;
   const token = localStorage.getItem('token');
-  console.log(token);
+
   if (token) {
     config.headers = {
       authorization: `Bearer ${token}`,
@@ -34,50 +35,27 @@ customAxios.interceptors.response.use(
   }
 );
 
-export const createTodo = async (postData: ITodos) => {
-  try {
-    const res = (await customAxios.post('/todos', postData)) as ITodoResponse;
-    // console.log(res);
-    return res;
-  } catch (error) {
-    console.log(error);
-  }
+export const createTodo = async (postData: ITodos): Promise<ITodoData[]> => {
+  const res = await customAxios.post('/todos', postData);
+  return res.data;
 };
 
-export const updateTodo = async (postData: ITodos, id: string) => {
-  try {
-    const res = (await customAxios.put(`/todos/${id}`, postData)) as ITodoResponse;
-    // console.log(res);
-    return res;
-  } catch (error) {
-    console.log(error);
-  }
+export const updateTodo = async ({ postData, id }: { postData: ITodos; id: string }): Promise<ITodoData> => {
+  const res = await customAxios.put(`/todos/${id}`, postData);
+  return res.data.data;
 };
 
-export const getTodo = async () => {
-  try {
-    const res = (await customAxios.get('/todos')) as ITodosResponse;
-    console.log(res);
-    return res;
-  } catch (error) {
-    console.log(error);
-  }
+export const getTodo = async (): Promise<ITodoData[]> => {
+  const res = await customAxios.get('/todos');
+  return res.data.data;
 };
 
-export const getTodoById = async (id: string) => {
-  try {
-    const res = (await customAxios.get(`/todos/${id}`)) as ITodoResponse;
-    return res;
-  } catch (error) {
-    console.log(error);
-  }
+export const getTodoById = async (query: QueryFunctionContext): Promise<ITodoData> => {
+  const res = await customAxios.get(`/todos/${query.queryKey[1]}`);
+  return res.data.data;
 };
 
-export const deleteTodo = async (id: string) => {
-  try {
-    const res = (await customAxios.delete(`/todos/${id}`)) as ITodoResponse;
-    return res;
-  } catch (error) {
-    console.log(error);
-  }
+export const deleteTodo = async (id: string): Promise<ITodoData[]> => {
+  const res = await customAxios.delete(`/todos/${id}`);
+  return res.data.data;
 };

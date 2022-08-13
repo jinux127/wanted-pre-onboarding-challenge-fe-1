@@ -4,17 +4,12 @@ import styled from 'styled-components';
 import { ITodoData } from 'types/interfaces';
 import Button from './Button';
 
-interface IProps {
-  setTodoList: React.Dispatch<React.SetStateAction<ITodoData[] | undefined>>;
-}
-
-const Header = (props: IProps) => {
+const Header = () => {
   const navigate = useNavigate();
-  const { setTodoList } = props;
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    setTodoList(undefined);
+
     navigate('/');
   };
 

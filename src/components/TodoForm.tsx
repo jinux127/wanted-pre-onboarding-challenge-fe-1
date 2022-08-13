@@ -1,15 +1,15 @@
 import { ITodos, IUser } from 'types/interfaces';
 import { useForm, UseFormReset } from 'react-hook-form';
 import styled from 'styled-components';
+import { useTodoCreate } from 'hooks/useTodoCreate';
 
 interface FormProps {
   children?: React.ReactNode;
-  onSubmit: (data: ITodos) => void;
 }
 
 const TodoForm = (props: FormProps) => {
-  const { children, onSubmit } = props;
-
+  const { children } = props;
+  const { mutate } = useTodoCreate();
   const {
     register,
     handleSubmit,
@@ -19,9 +19,10 @@ const TodoForm = (props: FormProps) => {
   } = useForm<ITodos>({ mode: 'onChange' });
 
   const handleOnSubmit = (data: ITodos) => {
-    onSubmit(data);
-    reset();
+    mutate(data);
+
     setFocus('title');
+    reset();
   };
 
   return localStorage.getItem('token') ? (

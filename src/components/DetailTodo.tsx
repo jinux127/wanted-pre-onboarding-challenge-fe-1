@@ -1,4 +1,5 @@
 import { getTodoById } from 'api';
+import { useDetailTodo } from 'hooks/useTodo';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import styled from 'styled-components';
@@ -8,15 +9,8 @@ import Button from './Button';
 const DetailTodo = () => {
   const [detailTodo, setDetailTodo] = useState<ITodoData>();
   const { todoId } = useParams();
+  const { data } = useDetailTodo(todoId || '');
   const navigate = useNavigate();
-  useEffect(() => {
-    if (todoId) {
-      (async () => {
-        const res = await getTodoById(todoId);
-        setDetailTodo(() => res?.data.data);
-      })();
-    }
-  }, [todoId]);
 
   const handleModify = () => {
     navigate(`modify`);
@@ -24,10 +18,10 @@ const DetailTodo = () => {
 
   return (
     <>
-      <StyledH1>{detailTodo?.title}</StyledH1>
-      <StyledSpan style={{ fontSize: '0.2rem', marginBottom: '1rem' }}>{detailTodo?.updatedAt}</StyledSpan>
-      <StyledP style={{ fontSize: '1.3rem' }}>{detailTodo?.content}</StyledP>
-      {detailTodo ? <Button onClick={() => handleModify()} text='수정' /> : ''}
+      <StyledH1>{data?.title}</StyledH1>
+      <StyledSpan style={{ fontSize: '0.2rem', marginBottom: '1rem' }}>{data?.updatedAt}</StyledSpan>
+      <StyledP style={{ fontSize: '1.3rem' }}>{data?.content}</StyledP>
+      {data ? <Button onClick={() => handleModify()} text='수정' /> : ''}
     </>
   );
 };

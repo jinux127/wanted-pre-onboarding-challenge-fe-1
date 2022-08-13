@@ -27,7 +27,7 @@ const LoginForm = (props: FormProps) => {
 
   useEffect(() => {
     (async () => {
-      isValidToken.current = await getTodo();
+      // isValidToken.current = await getTodo();
       if (isValidToken.current?.status === 200) navigate('/');
     })();
   }, []);
